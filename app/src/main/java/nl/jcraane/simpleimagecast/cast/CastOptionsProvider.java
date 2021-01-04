@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package nl.jcraane.simpleimagecast;
+package nl.jcraane.simpleimagecast.cast;
 
 import android.content.Context;
 
@@ -25,6 +25,9 @@ import com.google.android.gms.cast.framework.media.CastMediaOptions;
 import com.google.android.gms.cast.framework.media.NotificationOptions;
 
 import java.util.List;
+
+import nl.jcraane.simpleimagecast.MainActivity;
+import nl.jcraane.simpleimagecast.R;
 
 public class CastOptionsProvider implements OptionsProvider {
 
