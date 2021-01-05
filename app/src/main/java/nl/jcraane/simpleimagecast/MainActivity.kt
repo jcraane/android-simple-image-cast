@@ -11,7 +11,6 @@ import com.google.android.gms.cast.MediaInfo
 import com.google.android.gms.cast.MediaLoadRequestData
 import com.google.android.gms.cast.MediaMetadata
 import com.google.android.gms.cast.framework.*
-import com.google.android.gms.cast.framework.IntroductoryOverlay.OnOverlayDismissedListener
 import com.google.android.gms.common.images.WebImage
 import kotlinx.android.synthetic.main.activity_main.*
 import nl.jcraane.simpleimagecast.cast.EmptySessionManagerListener
@@ -104,22 +103,18 @@ class MainActivity : AppCompatActivity() {
         mCastSession?.remoteMediaClient?.let { remoteMediaClient ->
             remoteMediaClient.load(
                 MediaLoadRequestData.Builder()
-                    .setMediaInfo(buildMediaInfo(url, isMovie = false)).build()
+                    .setMediaInfo(
+                        MediaInfo.Builder(url)
+                            .setStreamType(MediaInfo.STREAM_TYPE_NONE)
+                            .setContentType("image/png")
+                            .setMetadata(MediaMetadata(MediaMetadata.MEDIA_TYPE_PHOTO).apply {
+                                putString(MediaMetadata.KEY_TITLE, url)
+                                addImage(WebImage(Uri.parse(url)))
+                            })
+                            .build()
+                    ).build()
             )
         }
-    }
-
-    private fun buildMediaInfo(url: String, isMovie: Boolean): MediaInfo? {
-        val streamType = if (isMovie) MediaInfo.STREAM_TYPE_BUFFERED else MediaInfo.STREAM_TYPE_NONE
-        val contentType = if (isMovie) "video/mp4" else "image/png"
-        return MediaInfo.Builder(url)
-            .setStreamType(streamType)
-            .setContentType(contentType)
-            .setMetadata(MediaMetadata(MediaMetadata.MEDIA_TYPE_PHOTO).apply {
-                putString(MediaMetadata.KEY_TITLE, url)
-                addImage(WebImage(Uri.parse(url)))
-            })
-            .build()
     }
 
     private fun setupCastListener() {
