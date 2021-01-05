@@ -32,16 +32,9 @@ import nl.jcraane.simpleimagecast.R;
 public class CastOptionsProvider implements OptionsProvider {
 
     public CastOptions getCastOptions(Context context) {
-        NotificationOptions notificationOptions = new NotificationOptions.Builder()
-                .setTargetActivityClassName(MainActivity.class.getName())
-                .build();
-        CastMediaOptions mediaOptions = new CastMediaOptions.Builder()
-                .setNotificationOptions(notificationOptions)
-                .build();
-
         return new CastOptions.Builder()
                 .setReceiverApplicationId(context.getString(R.string.cast_app_id))
-                .setCastMediaOptions(mediaOptions)
+                .setCastMediaOptions(new CastMediaOptions.Builder().build())
                 .build();
     }
 
