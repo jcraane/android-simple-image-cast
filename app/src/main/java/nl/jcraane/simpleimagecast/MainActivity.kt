@@ -65,17 +65,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
-        mCastContext!!.sessionManager.addSessionManagerListener(
+        mCastContext?.sessionManager?.addSessionManagerListener(
             mSessionManagerListener,
             CastSession::class.java
         )
-        mCastContext!!.addCastStateListener(mCastStateListener)
+        mCastContext?.addCastStateListener(mCastStateListener)
         super.onResume()
     }
 
     override fun onPause() {
-        mCastContext!!.removeCastStateListener(mCastStateListener)
-        mCastContext!!.sessionManager.removeSessionManagerListener(
+        mCastContext?.removeCastStateListener(mCastStateListener)
+        mCastContext?.sessionManager?.removeSessionManagerListener(
             mSessionManagerListener,
             CastSession::class.java
         )
@@ -93,8 +93,7 @@ class MainActivity : AppCompatActivity() {
                 )
                     .setTitleText("Introducing Cast")
                     .setSingleTime()
-                    .setOnOverlayDismissedListener(
-                        OnOverlayDismissedListener { mIntroductoryOverlay = null })
+                    .setOnOverlayDismissedListener { mIntroductoryOverlay = null }
                     .build()
                 mIntroductoryOverlay?.show()
             }
